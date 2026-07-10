@@ -15,12 +15,12 @@ CREATE TABLE tank (
   tankname TEXT NOT NULL,
   tankdescription TEXT NOT NULL,
 
-  tankfrontalarmor INTEGER NOT NULL
-  tanksidearmor INTEGER NOT NULL
+  tankfrontalarmor INTEGER NOT NULL,
+  tanksidearmor INTEGER NOT NULL,
 
-  tankcannon INTEGER NOT NULL
+  tankcannon INTEGER NOT NULL,
 
-  tankengine INTEGER NOT NULL
+  tankengine INTEGER NOT NULL,
 
-  FOREIGN KEY (author_id) REFERENCES user (id)
+  FOREIGN KEY (owner_id) REFERENCES user (id)
 );
