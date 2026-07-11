@@ -39,7 +39,7 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black flex justify-center items-center px-4">
+    <div className="min-h-screen bg-linear-to-b from-gray-900 via-gray-800 to-black flex justify-center items-center px-4">
 
       <div className="w-full max-w-md bg-gray-900 border-2 border-yellow-600 rounded-xl shadow-2xl">
 
