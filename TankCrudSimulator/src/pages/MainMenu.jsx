@@ -17,7 +17,7 @@ export default function MainMenu() {
 			<div className="flex justify-center row-span-3">
 				<div className="flex items-center justify-center">
 					<button className="bg-green-500 hover:scale-105 border-4 w-50 h-20 rounded flex justify-center items-center"
-						onClick={() => navigate("/garage")}
+						onClick={() => navigate("/login")}
 					>
 						<h1 className="font-semibold">Open Garage</h1>
 					</button>
