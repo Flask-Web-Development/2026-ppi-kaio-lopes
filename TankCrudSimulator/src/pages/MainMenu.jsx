@@ -1,46 +1,83 @@
-import react, { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import tank from "../../public/tank.png";
 import tank2 from "../../public/tank.webp";
 
 export default function MainMenu() {
-	const [onHover, setOnHover] = useState(false);
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const Navigator = useNavigate();
   return (
-    <div className="grid grid-rows-5 h-screen bg-gray-700 relative">
-      <div className="flex items-center justify-center bg-green-800">
-				<h1 className="text-center text-4xl font-semibold bg-yellow-400 px-2 py-3 border-4">TANK GARAGE SIMULATOR v0.1</h1>
-			</div>
+    <div className="relative h-screen overflow-hidden bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white">
 
-			<div className="flex justify-center row-span-3">
-				<div className="flex items-center justify-center">
-					<button className="bg-green-500 hover:scale-105 border-4 w-50 h-20 rounded flex justify-center items-center"
-						onClick={() => navigate("/login")}
-					>
-						<h1 className="font-semibold">Open Garage</h1>
-					</button>
-				</div>
-			</div>
-			
+      {/* Tanques decorativos */}
+      <img
+        src={tank}
+        alt="Tank"
+        className="absolute left-0 top-1/2 -translate-y-1/2 w-96 opacity-20 pointer-events-none"
+      />
 
-			<div className='bg-black flex items-center justify-center'>
-				<div className="flex place-self-center justify-center flex-col items-center bg-gray-300 border-4 rounded w-80 rounded-2xl border-dashed">
-					<p>Made By KAIO H. Lopes Teixeira</p>
-					
-					<p>20241144010013, kaiolopes-dot</p>
+      <img
+        src={tank2}
+        alt="Tank"
+        className="absolute right-0 top-1/2 -translate-y-1/2 w-96 opacity-20 pointer-events-none"
+      />
 
-					<p>made without love :3</p>
-				</div>
-			</div>
+      {/* Conteúdo principal */}
+      <div className="relative z-10 flex flex-col h-full">
 
-			<img src={tank} alt="" 
-			 className={'absolute left-0 top-1/2 -translate-y-1/2 size-100'}
-			/>
-			<img src={tank2} alt="" 
-			 className={'absolute right-0 top-1/2 -translate-y-1/2 size-100'}
-			/>
+        {/* Header */}
+        <header className="flex justify-center pt-12">
+          <div className="bg-yellow-500 text-black border-4 border-black px-8 py-4 shadow-lg">
+            <h1 className="text-4xl font-extrabold tracking-wider">
+              TANK GARAGE SIMULATOR
+            </h1>
+
+            <p className="text-center text-sm font-semibold">
+              Version 0.1
+            </p>
+          </div>
+        </header>
+
+        {/* Centro */}
+        <main className="flex-1 flex flex-col justify-center items-center gap-6">
+
+          <button
+            onClick={() => navigate("/login")}
+            className="
+              bg-green-600
+              hover:bg-green-500
+              hover:scale-105
+              active:scale-95
+              transition
+              duration-200
+              border-4
+              border-green-900
+              w-64
+              h-20
+              text-2xl
+              font-bold
+              shadow-xl
+              cursor-pointer
+            "
+          >
+            OPEN GARAGE
+          </button>
+
+          <p className="text-gray-400 text-sm">
+            Manage your tanks and expand your collection.
+          </p>
+
+        </main>
+
+        {/* Footer */}
+        <footer className="pb-6 flex justify-center">
+          <div className="bg-gray-900/80 border border-gray-700 rounded-xl px-6 py-3 text-center text-sm">
+            <p>Made by Kaio H. Lopes Teixeira</p>
+            <p>20241144010013</p>
+            <p className="text-gray-500">made without love :3</p>
+          </div>
+        </footer>
+
+      </div>
     </div>
   );
 }

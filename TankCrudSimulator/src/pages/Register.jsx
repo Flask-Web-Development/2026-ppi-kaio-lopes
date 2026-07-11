@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -24,54 +25,119 @@ export default function Register() {
 
       const data = await response.json();
 
-      console.log(data);
-
       if (data.created) {
-        alert("Usuário cadastrado com sucesso!");
+        alert("Commander registered successfully!");
         setUsername("");
         setPassword("");
       } else {
-        alert("Erro ao cadastrar usuário.");
+        alert("Registration failed.");
       }
     } catch (error) {
       console.error(error);
-      alert("Erro ao conectar com a API.");
+      alert("Unable to connect to the server.");
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow-md w-80"
-      >
-        <h1 className="text-xl font-bold mb-4 text-center">
-          Cadastro
-        </h1>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black flex justify-center items-center px-4">
 
-        <input
-          type="text"
-          placeholder="Usuário"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="w-full border p-2 rounded mb-3"
-        />
+      <div className="w-full max-w-md bg-gray-900 border-2 border-yellow-600 rounded-xl shadow-2xl">
 
-        <input
-          type="password"
-          placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full border p-2 rounded mb-4"
-        />
+        {/* Header */}
+        <div className="bg-yellow-700 p-4 rounded-t-xl">
+          <h1 className="text-center text-2xl font-bold text-white">
+            NEW COMMANDER
+          </h1>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded"
+          <p className="text-center text-yellow-100 text-sm">
+            Tank Garage Registration Terminal
+          </p>
+        </div>
+
+        {/* Form */}
+        <form
+          onSubmit={handleSubmit}
+          className="p-6 flex flex-col gap-4"
         >
-          Cadastrar
-        </button>
-      </form>
+          <div>
+            <label className="block text-yellow-400 text-sm mb-1">
+              USERNAME
+            </label>
+
+            <input
+              type="text"
+              placeholder="Choose your commander name"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="
+                w-full
+                bg-gray-800
+                border
+                border-gray-700
+                text-white
+                p-3
+                rounded
+                focus:outline-none
+                focus:border-yellow-500
+              "
+            />
+          </div>
+
+          <div>
+            <label className="block text-yellow-400 text-sm mb-1">
+              PASSWORD
+            </label>
+
+            <input
+              type="password"
+              placeholder="Create a password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="
+                w-full
+                bg-gray-800
+                border
+                border-gray-700
+                text-white
+                p-3
+                rounded
+                focus:outline-none
+                focus:border-yellow-500
+              "
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="
+              mt-2
+              bg-yellow-600
+              hover:bg-yellow-500
+              transition
+              font-bold
+              text-black
+              p-3
+              rounded
+            "
+          >
+            REGISTER COMMANDER
+          </button>
+
+          <Link
+            to="/login"
+            className="
+              text-center
+              text-yellow-400
+              hover:text-yellow-300
+              text-sm
+            "
+          >
+            Back to login
+          </Link>
+        </form>
+
+      </div>
+
     </div>
   );
 }

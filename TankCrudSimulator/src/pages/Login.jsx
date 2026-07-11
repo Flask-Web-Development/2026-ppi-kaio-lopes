@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -6,6 +7,7 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     const response = await fetch(
       "http://localhost:5000/auth/login",
       {
@@ -21,7 +23,7 @@ export default function Login() {
     );
 
     const data = await response.json();
-    console.log(data);
+
     if (data.userLoggedIn) {
       alert("Login realizado");
     } else {
@@ -30,32 +32,104 @@ export default function Login() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-sm mx-auto p-4 flex flex-col gap-4"
-    >
-      <input
-        type="text"
-        placeholder="Usuário"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="border p-2 rounded"
-      />
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black flex justify-center items-center px-4">
 
-      <input
-        type="password"
-        placeholder="Senha"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="border p-2 rounded"
-      />
+      <div className="w-full max-w-md bg-gray-900 border-2 border-green-700 rounded-xl shadow-2xl">
 
-      <button
-        type="submit"
-        className="bg-blue-500 text-white p-2 rounded"
-      >
-        Entrar
-      </button>
-    </form>
+        {/* Header */}
+        <div className="bg-green-800 p-4 rounded-t-xl">
+          <h1 className="text-center text-2xl font-bold text-white">
+            TANK GARAGE
+          </h1>
+
+          <p className="text-center text-green-200 text-sm">
+            Access Control System
+          </p>
+        </div>
+
+        {/* Form */}
+        <form
+          onSubmit={handleSubmit}
+          className="p-6 flex flex-col gap-4"
+        >
+          <div>
+            <label className="block text-green-400 text-sm mb-1">
+              USERNAME
+            </label>
+
+            <input
+              type="text"
+              placeholder="Commander"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="
+                w-full
+                bg-gray-800
+                border
+                border-gray-700
+                text-white
+                p-3
+                rounded
+                focus:outline-none
+                focus:border-green-500
+              "
+            />
+          </div>
+
+          <div>
+            <label className="block text-green-400 text-sm mb-1">
+              PASSWORD
+            </label>
+
+            <input
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="
+                w-full
+                bg-gray-800
+                border
+                border-gray-700
+                text-white
+                p-3
+                rounded
+                focus:outline-none
+                focus:border-green-500
+              "
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="
+              mt-2
+              bg-green-700
+              hover:bg-green-600
+              transition
+              font-bold
+              text-white
+              p-3
+              rounded
+            "
+          >
+            ENTER GARAGE
+          </button>
+
+          <Link
+            to="/register"
+            className="
+              text-center
+              text-green-400
+              hover:text-green-300
+              text-sm
+            "
+          >
+            Create new account
+          </Link>
+        </form>
+
+      </div>
+    </div>
   );
 }
