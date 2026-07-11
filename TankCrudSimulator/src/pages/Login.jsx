@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login( {userLoggedIn, setUserLoggedIn} ) {
+export default function Login( {userLoggedIn, setUserLoggedIn, setUserId} ) {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
@@ -29,10 +29,12 @@ export default function Login( {userLoggedIn, setUserLoggedIn} ) {
     if (data.userLoggedIn) {
       alert("Login realizado");
       setUserLoggedIn(true)
+      setUserId(data.userId)
       console.log(data)
     } else {
       alert("Usuário ou senha inválidos");
       setUserLoggedIn(false)
+      setUserId(null)
     }
   }
 

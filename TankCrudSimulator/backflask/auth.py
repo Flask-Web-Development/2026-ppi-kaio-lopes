@@ -48,7 +48,12 @@ def login():
         (username, password)
     ).fetchone()
 
-    return jsonify({
-        "userLoggedIn": user is not None,
-        "userId": user["id"],
-    })
+    if user is None:
+        return jsonify({
+            "userLoggedIn": False
+        })
+    else:
+        return jsonify({
+            "userLoggedIn": user is not None,
+            "userId": user["id"],
+        })
