@@ -1,9 +1,16 @@
-import react, { useState } from 'react';
+import react, { useEffect, useState } from 'react';
 
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
-export default function Workshop() {
+export default function Workshop( {userLoggedIn} ) {
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!userLoggedIn){
+      navigate('/login')
+    }
+  },[userLoggedIn])
   
   return (
     <div>

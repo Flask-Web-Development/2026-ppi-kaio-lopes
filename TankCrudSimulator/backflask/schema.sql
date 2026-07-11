@@ -13,6 +13,7 @@ CREATE TABLE tank (
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   
   tankname TEXT NOT NULL,
+  tankimg TEXT NOT NULL,
   tankdescription TEXT NOT NULL,
 
   tankfrontalarmor INTEGER NOT NULL,

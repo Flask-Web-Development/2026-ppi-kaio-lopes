@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login( {userLoggedIn, setUserLoggedIn} ) {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,13 +28,24 @@ export default function Login() {
 
     if (data.userLoggedIn) {
       alert("Login realizado");
+      setUserLoggedIn(true)
+      console.log(data)
     } else {
       alert("Usuário ou senha inválidos");
+      setUserLoggedIn(false)
     }
   }
 
+  useEffect(() => {
+    if(userLoggedIn){
+      navigate('/garage')
+    } else{
+      console.log("user not logged in")
+    }
+  })
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black flex justify-center items-center px-4">
+    <div className="min-h-screen bg-linear-to-b from-gray-900 via-gray-800 to-black flex justify-center items-center px-4">
 
       <div className="w-full max-w-md bg-gray-900 border-2 border-green-700 rounded-xl shadow-2xl">
 
@@ -83,7 +96,7 @@ export default function Login() {
 
             <input
               type="password"
-              placeholder="••••••••"
+              placeholder="•••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="

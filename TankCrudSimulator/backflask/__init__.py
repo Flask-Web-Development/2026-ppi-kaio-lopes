@@ -34,4 +34,7 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
+    from . import garage
+    app.register_blueprint(garage.bp)
+
     return app
