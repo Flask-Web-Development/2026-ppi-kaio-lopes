@@ -26,7 +26,7 @@ export default function TankModal({
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-      <div className="bg-gray-900 text-white w-200 rounded-xl p-6 border border-gray-700">
+      <div className="bg-gray-900 text-white w-200 rounded-xl max-h-screen overflow-y-scroll p-6 border border-gray-700">
 
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">
