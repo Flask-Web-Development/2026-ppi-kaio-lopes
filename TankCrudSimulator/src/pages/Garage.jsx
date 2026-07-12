@@ -1,40 +1,29 @@
 import react, { useEffect, useState } from 'react';
 
+import TankModal from './TankModal';
+
 import { useNavigate } from 'react-router-dom';
 
 
 export default function Workshop( {userLoggedIn, userId} ) {
   const navigate = useNavigate();
-  const [tanks, setTanks] = useState([
-    {
-      "id": 1,
-      "owner_id": 1,
-      "tankname": "Hetzer",
-      "tankimg": "https://images.cults3d.com/ejEd8ZNRcwf8iS5WjG0NOrrWWDU=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/29258903/illustration-file/e8a3c679-344c-4261-9145-f921187db8db/WhatsApp-Image-2025-06-10-at-10.32.26.jpeg",
-      "tankdescription": "Tank Destroyer, 1943"
-    },
-    {
-      "id": 2,
-      "owner_id": 1,
-      "tankname": "Panther",
-      "tankimg": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyQAWaYWXXvfod5LEsITlxefW75l8WtjcMPxoMPGU7FywoHhvcYFKg3lFJ&s=10",
-      "tankdescription": "Medium tank"
-    },
-    {
-      "id": 2,
-      "owner_id": 1,
-      "tankname": "Panther",
-      "tankimg": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyQAWaYWXXvfod5LEsITlxefW75l8WtjcMPxoMPGU7FywoHhvcYFKg3lFJ&s=10",
-      "tankdescription": "Medium tank"
-    },
-    {
-      "id": 2,
-      "owner_id": 1,
-      "tankname": "Panther",
-      "tankimg": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyQAWaYWXXvfod5LEsITlxefW75l8WtjcMPxoMPGU7FywoHhvcYFKg3lFJ&s=10",
-      "tankdescription": "Medium tank"
-    },
-  ]);
+  const [tanks, setTanks] = useState([]);
+
+  const [selectedTank, setSelectedTank] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editable, setEditable] = useState(false);
+
+  function openTank(tank) {
+    setSelectedTank(tank);
+    setEditable(false);
+    setModalOpen(true);
+  }
+
+  function editTank(tank) {
+    setSelectedTank(tank);
+    setEditable(true);
+    setModalOpen(true);
+  }
 
   useEffect(()=>{
     if(!userLoggedIn){
@@ -54,20 +43,81 @@ export default function Workshop( {userLoggedIn, userId} ) {
 
       const data = await response.json();
       console.log(data)
-      //setTanks(data);
+      setTanks(data);
     }
 
     loadTanks();
   }, []);
+
+  //deletes, bruh
+  async function deleteTank(tankId) {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/garage/delete",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            tankId,
+            userId,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setTanks((currentTanks) =>
+          currentTanks.filter((tank) => tank.id !== tankId)
+        );
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  //saves tank on update
+  async function saveTank(updatedTank) {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/garage/update",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedTank),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setTanks((current) =>
+          current.map((tank) =>
+            tank.id === updatedTank.id
+              ? updatedTank
+              : tank
+          )
+        );
+
+        setModalOpen(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
   
   return (
-    <div className="w-screen h-full min-h-screen bg-linear-to-b from-gray-900 via-gray-800 to-black text-white">
+    <div className="w-full h-full min-h-screen bg-linear-to-b from-gray-900 via-gray-800 to-black text-white">
       <div className="relative z-10 flex flex-col items-center h-full">
 
         <header className="flex justify-center pt-6">
           <div className="bg-yellow-500 text-black border-4 border-black px-8 py-4 shadow-lg">
             <h1 className="text-2xl font-extrabold tracking-wider">
-              Comandante, Tanques Prontos, Panzer Vor!
+              Commander, Tanks Ready, Panzer Vor!
             </h1>
           </div>
         </header>
@@ -79,20 +129,50 @@ export default function Workshop( {userLoggedIn, userId} ) {
               <img src={tank.tankimg} alt="" className='h-37.5'/>
               <p>{tank.tankdescription}</p>
               <div className='flex w-[90%] mb-1 items-center justify-center'>
-                <button className='px-2 py-1 w-16 bg-gray-800 hover:bg-gray-600'>
+                <button className='px-2 py-1 w-16 bg-red-800 hover:bg-red-600'
+                onClick={() => deleteTank(tank.id)}
+                >
                   Delete
                 </button>
-                <button className='px-2 py-1 w-16 bg-gray-800 hover:bg-gray-600'>
+                <button className='px-2 py-1 w-16 bg-gray-800 hover:bg-gray-600'
+                onClick={() => editTank(tank)}
+                >
                   Edit
                 </button>
-                <button className='px-2 py-1 w-16 bg-gray-800 hover:bg-gray-600'>
+                <button className='px-2 py-1 w-16 bg-gray-800 hover:bg-gray-600'
+                onClick={() => openTank(tank)}
+                >
                   Open
                 </button>
               </div>
             </div>
           ))}
         </section>
+
+        <footer className='grid grid-cols-3 gap-5 mx-5 w-full fixed bottom-0'>
+          <button className='w-full h-20 mb-3 bg-gray-900/80 border border-gray-700 rounded-xl'
+          onClick={()=> navigate('/')}
+          >
+            <h1>Go Back to Menu</h1>
+          </button>
+          <button className='w-full h-20 mb-3 bg-gray-900/80 border border-gray-700 hover:bg-red-950 rounded-xl'>
+            <h1>Into Battle!</h1>
+          </button>
+          <button className='w-full h-20 mb-3 bg-gray-900/80 border border-gray-700 rounded-xl'
+            onClick={()=> navigate('/workshop')}
+          >
+            <h1>Create a New WunderWaffle</h1>
+          </button>
+        </footer>
       </div>
+
+      <TankModal
+        isOpen={modalOpen}
+        tank={selectedTank}
+        editable={editable}
+        onClose={() => setModalOpen(false)}
+        onSave={saveTank}
+      />
     </div>
   );
 }

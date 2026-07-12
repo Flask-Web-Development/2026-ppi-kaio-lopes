@@ -4,6 +4,7 @@ import MainMenu from './pages/MainMenu'
 import Garage from './pages/Garage'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Workshop from './pages/Workshop'
 
 
 
@@ -20,7 +21,7 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/garage" element={<Garage userLoggedIn={userLoggedIn} userId={userId} />} />
       <Route path="/mechanic" element={<MainMenu />} />
-      <Route path="/workshop" element={<MainMenu />} />
+      <Route path="/workshop" element={<Workshop userLoggedIn={userLoggedIn} userId={userId} />} />
     </Routes>
   )
 }
