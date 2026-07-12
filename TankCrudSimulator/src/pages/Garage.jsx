@@ -79,13 +79,13 @@ export default function Workshop( {userLoggedIn, userId} ) {
               <img src={tank.tankimg} alt="" className='h-37.5'/>
               <p>{tank.tankdescription}</p>
               <div className='flex w-[90%] mb-1 items-center justify-center'>
-                <button className='px-2 py-1 w-16 bg-gray-800'>
+                <button className='px-2 py-1 w-16 bg-gray-800 hover:bg-gray-600'>
                   Delete
                 </button>
-                <button className='px-2 py-1 w-16 bg-gray-800'>
+                <button className='px-2 py-1 w-16 bg-gray-800 hover:bg-gray-600'>
                   Edit
                 </button>
-                <button className='px-2 py-1 w-16 bg-gray-800'>
+                <button className='px-2 py-1 w-16 bg-gray-800 hover:bg-gray-600'>
                   Open
                 </button>
               </div>
